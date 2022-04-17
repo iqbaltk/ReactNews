@@ -1,5 +1,4 @@
 import axios from "axios";
-import { url } from "inspector";
 import moment from "moment-timezone";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -8,35 +7,19 @@ import {
     CardImg,
     CardTitle,
 } from "reactstrap";
-import { CardSubtitle, CardText, Button } from 'reactstrap';
+import { CardSubtitle, CardText } from 'reactstrap';
 import ListNews from '../ListNews/ListNews';
 
 const DetailNews = () => {
-    const [data, setData] = useState<any>([
-        {
-            title: "",
-            description: "",
-            author: "",
-            url: "",
-            urlToImage: "",
-            publishedAt: "",
-            content: "",
-            source: "",
-        },
-    ]);
-
+    const [data, setData] = useState<any>([]);
     const title = useParams<any>()
-
-
-    // const API_KEY = "401ed03bc7c54ee684ff0ebae6ee5ca6"
-    // const API_KEY = "03412841475d44f1aed32b9e3e741c59"
-    const API_KEY = "dumy"
+    const { REACT_APP_API_KEY } = process.env
 
     useEffect(() => {
         axios
             .get(`https://newsapi.org/v2/top-headlines?country=id&pageSize=1&q=${title["title"]}`,
                 {
-                    headers: { Authorization: "Bearer " + API_KEY },
+                    headers: { Authorization: "Bearer " + REACT_APP_API_KEY},
                 }
             )
             .then((res) => {
@@ -62,18 +45,18 @@ const DetailNews = () => {
     return (
         <>
             <div className="col">
-
                 {data.url ? (
-                    <CardBody className="mb-3 mt-3">
+                    <CardBody className="mb-5 mt-3">
                         <CardTitle tag="h1" className="display-7 mb-3">
                             {data.title}
                         </CardTitle>
-                        <CardSubtitle className="mb-4 fw-bold" tag="h6" >
-
+                        <CardSubtitle className="mt-4 fw-bold" tag="h6" >
                             <span className="text-muted">{moment.tz(data.publishedAt, 'YYYY-MM-DD').tz("Asia/Jakarta").format('YYYY-MM-DD HH:mm')}</span><br />
+                        </CardSubtitle>
+                        <CardSubtitle className="mt-1 mb-4 fw-bold" tag="h6" >
                             {data.author} - <span className="text-warning">{data.source}</span>
                         </CardSubtitle>
-                        <CardImg src={`${data.urlToImage}`} height={550} alt="background" className="mb-4" />
+                        <CardImg src={`${data.urlToImage}`} height={560} alt="background" className="mb-4" />
                         <CardText>
                             {data.content}
                         </CardText>
@@ -82,11 +65,11 @@ const DetailNews = () => {
                         </button></a>
                     </CardBody>
                 ) : (("Tunggu Sebentar...."))}
-            
+
                 {data.url && (
                     <>
                         <hr />
-                        <h1>Berita Populer</h1>
+                        <h3 className="mb-4">Berita Populer</h3>
                         <ListNews pageSize="3" />
                     </>
                 )}

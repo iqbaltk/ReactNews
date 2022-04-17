@@ -5,24 +5,8 @@ import { Card, CardBody, CardImg, CardSubtitle, CardTitle } from "reactstrap";
 import { Link } from "react-router-dom";
 
 const SearchNews = (props: any) => {
-    const { pageSize = 10 } = props
-
-    const [data, setData] = useState<any>([
-        {
-            title: "",
-            description: "",
-            author: "",
-            url: "",
-            urlToImage: "",
-            publishedAt: "",
-            content: "",
-            source: "",
-        },
-    ]);
-
-    // const API_KEY = "401ed03bc7c54ee684ff0ebae6ee5ca6"
-    // const API_KEY = "03412841475d44f1aed32b9e3e741c59"
-    const API_KEY = "dumy"
+    const [data, setData] = useState<any>([]);
+    const { REACT_APP_API_KEY } = process.env
 
     let history = useHistory()
     const params = useParams<any>()
@@ -36,7 +20,7 @@ const SearchNews = (props: any) => {
             await axios.get(
                 `https://newsapi.org/v2/top-headlines?q=${params["cari"]}&country=id`,
                 {
-                    headers: { Authorization: "Bearer " + API_KEY },
+                    headers: { Authorization: "Bearer " + REACT_APP_API_KEY },
                 }
             )
                 .then((res) => {
@@ -54,13 +38,11 @@ const SearchNews = (props: any) => {
                             };
                         })
                     )
-
                 })
                 .catch((err) => {
                     alert(err)
                     alert(err.response.data.message);
                 })
-
         };
         fetchData()
     }, [params])
@@ -73,9 +55,8 @@ const SearchNews = (props: any) => {
                         <>
                             {item.title ? (
                                 <div className="col-sm-12 col-md-6 col-lg-4 mb-3 mt-3">
-                                    {/* <a href={`/detail/${item.title}`} rel="noreferrer" style={{ textDecoration: 'none' }}> */}
                                     <Link to={`/detail/${item.title}`} style={{ textDecoration: 'none' }}>
-                                        <Card body color="light" className="h-100" >
+                                        <Card body className="btn btn-primary text-primary h-100 bg-body" >
                                             <CardBody>
                                                 <CardImg src={`${item.urlToImage}`} alt="Image" className="mb-4" />
 
@@ -91,7 +72,6 @@ const SearchNews = (props: any) => {
                                             </CardBody>
                                         </Card>
                                     </Link>
-                                    {/* </a> */}
                                 </div>
                             ) : (<div className="col">Tunggu Sebentar</div>)}
                         </>

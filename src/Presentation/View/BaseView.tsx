@@ -6,10 +6,9 @@ const BaseView = (props: any) => {
     return (
         <>
             <Header />
-            <div className="container">
+            <div className="container mt-4" style={{ marginBottom: "160px" }}>
                 <div className='row'>
-
-                {content}
+                    {content}
                 </div>
             </div>
             <Footer />

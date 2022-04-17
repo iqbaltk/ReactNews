@@ -9,20 +9,20 @@ const Routes = () => {
   return (
     <>
       <Router>
-          <Switch>
-            <Route path={"/"} exact>
-              <BaseView content={<ListNews />} />
-            </Route>
-            <Route path={"/detail/:title"} exact>
-              <BaseView content={<DetailNews />} />
-            </Route>
-            <Route path={"/search/"} exact>
-              <BaseView content={<SearchNews />} />
-            </Route>
-            <Route path={"/search/:cari"} exact>
-              <BaseView content={<SearchNews />} />
-            </Route>
-          </Switch>
+        <Switch>
+          <Route path={"/"} exact>
+            <BaseView content={<ListNews />} />
+          </Route>
+          <Route path={"/detail/:title"} exact>
+            <BaseView content={<DetailNews />} />
+          </Route>
+          <Route path={"/search/"} exact>
+            <BaseView content={<SearchNews />} />
+          </Route>
+          <Route path={"/search/:cari"} exact>
+            <BaseView content={<SearchNews />} />
+          </Route>
+        </Switch>
       </Router>
     </>
   );
