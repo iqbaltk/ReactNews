@@ -12,7 +12,7 @@ const ListNews = (props: any) => {
             await axios.get(
                 `https://newsapi.org/v2/top-headlines?country=id&pageSize=${pageSize}`,
                 {
-                    headers: { Authorization: "Bearer " + REACT_APP_API_KEY},
+                    headers: { Authorization: "Bearer " + REACT_APP_API_KEY },
                 }
             )
                 .then((res) => {
